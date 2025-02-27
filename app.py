@@ -7,6 +7,9 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import random
 
+# Set Streamlit layout to wide screen
+st.set_page_config(layout="wide")
+
 # Load built-in librosa example tracks for a larger dataset
 @st.cache_data
 def load_sample_data():
