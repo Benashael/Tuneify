@@ -12,16 +12,15 @@ import random
 def load_sample_data():
     dataset = []
     example_tracks = [
-        "trumpet", "brahms", "nutcracker", "choice", "vibeace", "jazz", "flamenco", "orchestra", "synth", "piano",
-        "guitar", "violin", "saxophone", "clarinet", "drums", "bass", "cello", "harp", "accordion", "banjo",
-        "ukulele", "flute", "harmonica", "marimba", "oboe", "trombone", "tuba", "xylophone", "tabla", "sitar",
-        "mandolin", "bagpipes", "didgeridoo", "koto", "shamisen", "erhu", "guqin", "duduk", "panflute", "ocarina",
-        "kalimba", "steel_drum", "zither", "bouzouki", "hurdy_gurdy", "lyre", "theremin", "vibraphone", "glass_harp", "handpan"
-    ]
+        "trumpet", "brahms", "nutcracker", "choice", "vibeace"
+    ]  # Only valid librosa example tracks
     for track in example_tracks:
-        y, sr = librosa.load(librosa.ex(track), sr=22050)
-        mfcc_features = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13).mean(axis=1).tolist()
-        dataset.append({"Title": track.capitalize(), "Artist": "Unknown", "Genre": "Instrumental", "MFCC_Features": mfcc_features})
+        try:
+            y, sr = librosa.load(librosa.ex(track), sr=22050)
+            mfcc_features = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13).mean(axis=1).tolist()
+            dataset.append({"Title": track.capitalize(), "Artist": "Unknown", "Genre": "Instrumental", "MFCC_Features": mfcc_features})
+        except Exception as e:
+            print(f"Error loading track {track}: {e}")
     return dataset
 
 dataset = load_sample_data()
